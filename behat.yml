@@ -2,6 +2,7 @@ default:
   extensions:
     FriendsOfBehat\SymfonyExtension:
       bootstrap: ./tests/bootstrap.php
+#    TODO look into either getting this working with the test env or replace with something else
     Imbo\BehatApiExtension:
       apiClient:
         base_uri: http://localhost:8002
