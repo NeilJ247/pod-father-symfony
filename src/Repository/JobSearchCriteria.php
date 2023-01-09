@@ -16,10 +16,11 @@ class JobSearchCriteria
     private const ALLOWED_FIELDS = [
         'number_of_items' => 'j.number_of_items',
         'job_type' => 'j.job_type',
-        'late' => 'j.late',
-        'flagged' => 'j.flagged',
-        'due_by' => 'j.due_by',
-        'completed_at' => 'j.completed_at',
+//        TODO needs code to handle boolean and dates
+//        'late' => 'j.late',
+//        'flagged' => 'j.flagged',
+//        'due_by' => 'j.due_by',
+//        'completed_at' => 'j.completed_at',
         'customer' => 'c.name',
         'site' => 's.name',
     ];

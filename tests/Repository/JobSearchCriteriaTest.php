@@ -39,7 +39,7 @@ class JobSearchCriteriaTest extends TestCase
         $this->expectExceptionMessage('Invalid search operator -');
 
         // Act
-        $this->subject->add('due_by', '-', 'SOME_DATE');
+        $this->subject->add('site', '-', 'SOME_SITE');
     }
 
     /**
@@ -53,8 +53,8 @@ class JobSearchCriteriaTest extends TestCase
         $this->expectExceptionMessage('Cannot search a field more than once');
 
         // Act
-        $this->subject->add('due_by', 'eq', 'SOME_DATE');
-        $this->subject->add('due_by', 'lt', 'SOME_DATE');
+        $this->subject->add('site', 'eq', 'SOME_SITE');
+        $this->subject->add('site', 'lt', 'SOME_SITE_2');
     }
 
     /**
@@ -66,8 +66,8 @@ class JobSearchCriteriaTest extends TestCase
     {
         // Arrange
         $expected = [
-            'j.due_by' => [
-                '=' => 'SOME_DATE',
+            's.name' => [
+                '=' => 'SOME_SITE',
             ],
             'c.name' => [
                 '=' => 'Acme Ltd'
@@ -75,7 +75,7 @@ class JobSearchCriteriaTest extends TestCase
         ];
 
         $this->subject
-            ->add('due_by', 'eq', 'SOME_DATE')
+            ->add('site', 'eq', 'SOME_SITE')
             ->add('customer', 'eq', 'Acme Ltd');
 
         // Act
