@@ -1,0 +1,112 @@
+openapi: 3.0.3
+info:
+  title: Jobs API
+  description: Restful API service for PodFather jobs
+  version: 0.1.0
+
+tags:
+  - name: Jobs
+
+paths:
+  /jobs:
+    get:
+      tags:
+        - Jobs
+      parameters:
+        - name: filters
+          in: query
+          style: deepObject
+          explode: true
+          description: Allows results to be filtered on a number of fields (only one operation per field is allowed)
+          schema:
+            type: object
+            properties:
+              customer:
+                $ref: '#/components/schemas/JobFilterOperators'
+              site:
+                $ref: '#/components/schemas/JobFilterOperators'
+              job_type:
+                $ref: '#/components/schemas/JobFilterOperators'
+              number_of_items:
+                $ref: '#/components/schemas/JobFilterOperators'
+      responses:
+        200:
+          description: Returns a list of jobs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+
+components:
+  schemas:
+    equalTo:
+      type: object
+      properties:
+        eq:
+          type: string
+    greaterThan:
+      type: object
+      properties:
+        gt:
+          type: string
+    lesserThan:
+      type: object
+      properties:
+        lt:
+          type: string
+    greaterOrEqualTo:
+      type: object
+      properties:
+        gteq:
+          type: string
+    lesserOrEqualTo:
+      type: object
+      properties:
+        lteq:
+          type: string
+    JobFilterOperators:
+      oneOf:
+        - $ref: '#/components/schemas/equalTo'
+        - $ref: '#/components/schemas/greaterThan'
+        - $ref: '#/components/schemas/lesserThan'
+        - $ref: '#/components/schemas/greaterOrEqualTo'
+        - $ref: '#/components/schemas/lesserOrEqualTo'
+    Job:
+      type: object
+      properties:
+        jobId:
+          type: string
+          format: uuid
+        jobType:
+          type: string
+          enum: [Collection, Delivery]
+        customer:
+          type: object
+          properties:
+            customerId:
+              type: string
+              format: uuid
+            name:
+              type: string
+        site:
+          type: object
+          properties:
+            siteId:
+              type: string
+              format: uuid
+            name:
+              type: string
+        dueBy:
+          type: string
+          format: date
+        completedAt:
+          type: string
+          format: date
+        late:
+          type: boolean
+        flagged:
+          type: boolean
+        numberOfItems:
+          type: integer
